@@ -1,0 +1,56 @@
+## Mac
+.DS_Store
+
+## Windows
+.Thumbs.db
+
+## TextMate
+*.tm_project
+*.tmproj
+tmtags
+
+## Emacs
+*~
+\#*
+.\#*
+
+## Vim
+*.swp
+# IDEA / RUBYMINE
+.idea
+
+## RVM
+.rvmrc
+.ruby-version
+.ruby-gemset
+
+## Project (general)
+tags
+coverage
+rdoc
+doc
+.yardoc
+pkg
+
+## Project (specific)
+.bundle
+spec/rails
+*.sqlite3-journal
+Gemfile.lock
+gemfiles/rails_[3-5][0-9].gemfile.lock
+.test-rails-apps
+public
+.rspec
+.rails-version
+.rbenv-version
+.localeapp/*
+lib/bug_report_templates/tmp
+
+
+test/north_winds/db/development.sqlite3
+test/north_winds/db/test.sqlite3
+test/north_winds/log/development.log
+test/north_winds/log/test.log
+test/north_winds/storage/
+test/north_winds/tmp/
+test/reports/*
