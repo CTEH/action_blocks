@@ -315,6 +315,105 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     assert_equal r2.ocm, d2.order.customer.company
   end
 
+  test 'authorization is applied to selections' do
+  #   SELECT
+  #   (
+  #     SELECT
+  #         COUNT( "sub_order_details" . "id" ) AS count_of_order_details
+  #       FROM
+  #         "order_details" "sub_order_details"
+  #       WHERE
+  #         "sub_order_details" . "id" IN (
+  #           SELECT
+  #               "sub_order_details" . "id"
+  #             FROM
+  #               "order_details" "sub_order_details"
+  #               ,"orders" "sub_orders"
+  #             WHERE
+  #               "sub_orders" . "id" = "sub_order_details" . "order_id"
+  #               AND "order_details" . "id" = "sub_order_details" . "id"
+  #         )
+  #         AND "sub_order_details" . "status" != 'deleted'
+  #   ) count_of_order_details
+  # FROM
+  #   "order_details" "order_details"
+  # WHERE
+  #   "order_details" . "status" != 'deleted'
+
+    user = FactoryBot.create :user, { role: :employee }
+
+    ActionBlocks.model :order do
+      active_model Order
+      string :status
+
+      selection :order_details do
+        summary :count_of_order_details, -> { count }
+      end
+    end
+
+    ActionBlocks.model :order_detail do
+      active_model OrderDetail
+      identity :id
+      string :status
+      references :order do
+        lookup :status
+      end
+    end
+
+    ActionBlocks.authorization :order_detail do
+      grant :employee, _not_eq(:status, 'deleted')
+    end
+
+    ActionBlocks.authorization :order do
+      grant :employee, _not_eq(:status, 'deleted')
+    end
+
+    summary_field = ActionBlocks.find('field-order-count_of_order_details')
+    select_reqs = summary_field.select_requirements
+
+    e = ActionBlocks::DataEngine.new(OrderDetail, select_reqs: select_reqs, user: user)
+    e.process
+
+    debug e.query.to_sql
+  end
+
+  test 'no duplicate joins for authorization' do
+    # SELECT
+    #   "order_details" . "id" AS id
+    #   ,"order_details_order" . "status" AS order_status
+    # FROM
+    #   "order_details" "order_details" LEFT OUTER JOIN "orders" "order_details_order"
+    #     ON "order_details" . "order_id" = "order_details_order" . "id"
+    ActionBlocks.config[:should_authorize] = true
+
+    user = FactoryBot.create :user, { role: :admin }
+
+    ActionBlocks.model :order do
+      active_model Order
+      string :status
+    end
+
+    ActionBlocks.model :order_detail do
+      active_model OrderDetail
+      references :order do
+        lookup :status
+      end
+    end
+
+    ActionBlocks.authorization :order_detail do
+      grant :admin, _not_eq(:order_status, 'deleted')
+    end
+
+    select_reqs = [{ field_name: :id, path: [:id]}, { field_name: :order_status, path: [:order, :status] }]
+
+    e = ActionBlocks::DataEngine.new(OrderDetail, select_reqs: select_reqs, user: user)
+    e.process
+
+    debug e.query.to_sql
+    assert_equal 1, e.query.to_sql.scan(/LEFT OUTER JOIN/).count
+
+    ActionBlocks.config[:should_authorize] = false
+  end
 
 
 end
