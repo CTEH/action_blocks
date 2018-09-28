@@ -7,6 +7,8 @@ module ActionBlocks
       @root_klass = root_klass
       @tables = {}
 
+      @user = user
+
       @selects = []
 
       @summary_reqs = summary_reqs
@@ -39,6 +41,11 @@ module ActionBlocks
         @fields_engine.process
         @selections_engine.process
 
+        if ActionBlocks.config[:should_authorize]
+          @authorization_adapter = AuthorizationAdapter.new(engine: @fields_engine, user: @user)
+          @authorization_adapter.process
+        end
+
         sub_query = summaryreq[:root_klass]
                     .from([
                       @fields_engine.froms,
@@ -49,7 +56,7 @@ module ActionBlocks
                       @selections_engine.ordered_joins,
                       @fields_engine.ordered_joins
                     ].flatten.compact)
-                    .where(@selections_engine.wheres)
+                    .where([@selections_engine.wheres, @fields_engine.wheres].reduce(&:and))
                     .as(summaryreq[:select_req][:field_name].to_s)
 
         @selects << sub_query
