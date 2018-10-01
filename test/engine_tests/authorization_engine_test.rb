@@ -361,7 +361,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     end
 
     ActionBlocks.authorization :order_detail do
-      grant :employee, _not_eq(:status, 'deleted')
+      grant :employee, _not_eq(:order_status, 'deleted')
     end
 
     ActionBlocks.authorization :order do

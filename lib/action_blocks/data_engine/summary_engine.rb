@@ -56,7 +56,7 @@ module ActionBlocks
                       @selections_engine.ordered_joins,
                       @fields_engine.ordered_joins
                     ].flatten.compact)
-                    .where([@selections_engine.wheres, @fields_engine.wheres].reduce(&:and))
+                    .where([@selections_engine.wheres, @fields_engine.wheres].flatten.compact.reduce(&:and))
                     .as(summaryreq[:select_req][:field_name].to_s)
 
         @selects << sub_query
