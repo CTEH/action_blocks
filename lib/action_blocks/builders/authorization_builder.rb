@@ -3,7 +3,7 @@ module ActionBlocks
         block_type :authorization
         sets :active_model
         builds_many :rls, :grant, 'ActionBlocks::RlsBuilder'
-        add_scheme_helpers
+        includes_scheme_helpers
     end
 
     class RlsBuilder < ActionBlocks::BlockType

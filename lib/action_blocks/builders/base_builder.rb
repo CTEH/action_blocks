@@ -107,7 +107,7 @@ module ActionBlocks
       end
     end
 
-    def self.add_scheme_helpers
+    def self.includes_scheme_helpers
       self.delegate_class.define_method(:_and) do |*args|
           return [:and, *args] 
       end
