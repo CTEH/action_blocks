@@ -12,6 +12,8 @@ module ActionBlocks
     )
       @root_klass = root_klass
 
+      @filter_reqs = filter_reqs
+
       select_reqs_via_fields = select_fields.map(&:select_requirements)
 
       if [select_reqs].length > 0
@@ -44,11 +46,11 @@ module ActionBlocks
         selection_filter_reqs: selection_filter_reqs
       )
 
-      @filter_engine = ActionBlocks.config[:filter_engine].new(
-        @root_klass,
-        user: user,
-        filter_reqs: filter_reqs,
-      )
+      # @filter_engine = ActionBlocks.config[:filter_engine].new(
+      #   @root_klass,
+      #   user: user,
+      #   filter_reqs: filter_reqs,
+      # )
 
       @summary_engine = ActionBlocks.config[:summary_engine].new(
         @root_klass,
@@ -72,11 +74,17 @@ module ActionBlocks
       @fields_engine.process
       @selections_engine.process
       @summary_engine.process
-      @filter_engine.process
+      # @filter_engine.process
+
+      @filter_adapter = FilterAdapter.new(engine: @fields_engine, user: @user, filter_reqs: @filter_reqs)
+      @filter_adapter.process
+
       if ActionBlocks.config[:should_authorize]
           @authorization_adapter = AuthorizationAdapter.new(engine: @fields_engine, user: @user)
           @authorization_adapter.process
       end
+
+      
     end
 
     def to_json
@@ -100,7 +108,7 @@ module ActionBlocks
         @summary_engine.query,
         @selections_engine.query,
         @fields_engine.query,
-        @filter_engine.query,
+        # @filter_engine.query,
       ]
       engine_queries.reduce(&:merge)
     end

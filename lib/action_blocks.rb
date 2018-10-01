@@ -17,6 +17,7 @@ module ActionBlocks
 
   # autoload :AuthorizationEngine, 'action_blocks/data_engine/authorization_engine'
   autoload :AuthorizationAdapter, 'action_blocks/data_engine/authorization_adapter'
+  autoload :FilterAdapter, 'action_blocks/data_engine/filter_adapter'
 
   autoload :DatabaseFunctions, 'action_blocks/data_engine/database_functions'
   autoload :DataEngine, 'action_blocks/data_engine/data_engine'

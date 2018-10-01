@@ -108,11 +108,7 @@ class FormTest < ActiveSupport::TestCase
     end
 
     filter_reqs = ActionBlocks.find('form-abc').filter_reqs(user: user, record_id: wo.id)
-    expected_reqs = [{
-      :path1=>[:id],
-      :predicate=>:eq,
-      :path2=>[wo.id]
-    }]
+    expected_reqs = [:eq, :id, wo.id]
 
     assert_equal expected_reqs, filter_reqs
   end

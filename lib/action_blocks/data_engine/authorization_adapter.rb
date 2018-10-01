@@ -96,7 +96,7 @@ module ActionBlocks
 
       def process
         @arel_attributes = get_arel_attributes()
-        @engine.wheres = evaluate(rls_scheme)
+        @engine.wheres << evaluate(rls_scheme)
       end
   
       def walk_path(klass, node, parent_key, col_path)

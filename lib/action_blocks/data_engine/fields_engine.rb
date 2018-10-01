@@ -95,7 +95,7 @@ module ActionBlocks
         .from(froms)
         .select(selects)
         .joins(ordered_joins)
-        .where(wheres)
+        .where(wheres.compact.reduce(&:and))
     end
 
 

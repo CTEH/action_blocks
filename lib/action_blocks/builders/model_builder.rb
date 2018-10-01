@@ -44,14 +44,7 @@ module ActionBlocks
 
     def name_to_json(record_id:, user:)
       select_reqs = [name_field.select_requirements]
-      # We eventually want filter_reqs to be a __grammar__
-      # or some __common lisp__ format
-      filter_reqs = {
-        path1: [:id],
-        predicate: :eq,
-        path2: [record_id]
-      }
-
+      filter_reqs = [:eq, :id, record_id]
       engine = DataEngine.new(active_model, select_reqs: select_reqs, filter_reqs: filter_reqs)
       engine.first_to_json
     end
@@ -67,13 +60,7 @@ module ActionBlocks
     end
 
     def filter_reqs(record_id:, user:)
-      [
-          {
-            path1: [:id],
-            predicate: :eq,
-            path2: [record_id]
-          }
-      ]
+      [:eq, :id, record_id]
     end
 
     def hashify(user)
