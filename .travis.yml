@@ -9,6 +9,9 @@ language:
   - ruby
   - node_js
 
+rvm:
+  - 2.5.1
+
 os: linux
 
 cache:
