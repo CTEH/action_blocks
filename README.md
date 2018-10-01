@@ -1,5 +1,5 @@
 # ActionBlocks
-[![Travis](https://travis-ci.org/CTEH/action_blocks.svg?branch=master)](https://travis-ci.org/CTEH/action_blocks)
+[![Travis](https://travis-ci.org/CTEH/action_blocks.svg?branch=master)](https://travis-ci.org/CTEH/action_blocks) [![Gem Version](https://badge.fury.io/rb/action_blocks.svg)](https://rubygems.org/gems/action_blocks)
 
 ActionBlocks is a Ruby On Rails engine for building administrative database-driven applications.
 
