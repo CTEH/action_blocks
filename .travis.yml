@@ -1,0 +1,26 @@
+---
+sudo: required
+dist: trusty
+
+services:
+  - postgresql
+
+language:
+  - ruby
+  - node_js
+
+os: linux
+
+cache:
+  - bundler
+
+install:
+  - bundle install --path action_blocks
+
+before_script:
+  - psql -c 'create database action_blocks_app_test;' -U postgres
+  - psql -c 'create database action_blocks_gem_test;' -U postgres
+
+script:
+  - bundle exec rails test -v
+  - cd action_blocks; bundle exec rails test -v
