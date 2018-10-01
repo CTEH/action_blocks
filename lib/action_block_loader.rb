@@ -6,6 +6,7 @@ module ActionBlocks
     attr_reader :application, :load_paths
     def initialize(path)
       @load_paths = [File.expand_path(path, Rails.root)]
+      # puts "ActionBlocks @load_path=#{@load_paths.inspect}"
     end
 
     # Whether all configuration files have been loaded
@@ -22,11 +23,14 @@ module ActionBlocks
 
      # Loads all ruby files that are within the load_paths setting.
      # To reload everything simply call `ActionBlocks.unload!`
-     def load!
+     def load!(force=false)
+       # puts "ActionBlocks @load_path=#{@load_paths.inspect}"
+
        Rails.logger.debug "ActionBlocks::Loader load!()"
        Rails.logger.debug " loaded?:#{loaded?().inspect}"
-       unless loaded?
+       unless loaded? && !force
          # ActiveSupport::Notifications.publish BeforeLoadEvent, self # before_load hook
+         # puts files.inspect
          files.each{ |file| load file }                             # load files
          # ActiveSupport::Notifications.publish AfterLoadEvent, self  # after_load hook
          @@loaded = true

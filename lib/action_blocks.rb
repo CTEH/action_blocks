@@ -55,9 +55,9 @@ module ActionBlocks
   end
 
 
-  def self.load
+  def self.load(force=false)
     self.loader = ActionBlocks::Loader.new('app/blocks')
-    self.loader.load!
+    self.loader.load!(force)
     self.block_store.after_load
     self.loader.attach_reloader
     self.block_store.freeze_builders

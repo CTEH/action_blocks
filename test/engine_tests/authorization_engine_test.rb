@@ -9,7 +9,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
 
   test "grant role without block authorizes all" do
     user = FactoryBot.create :user, { role: :admin }
-    3.times do 
+    3.times do
         FactoryBot.create :order
     end
     ActionBlocks.model :order
@@ -22,13 +22,13 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
         user: user,
     )
 
-    assert_equal 3, engine.query.all.length     
+    assert_equal 3, engine.query.all.length
   end
 
 
   test "no grant authorizes none" do
     user = FactoryBot.create :user, { role: :admin }
-    3.times do 
+    3.times do
         FactoryBot.create :order
     end
     ActionBlocks.model :order
@@ -42,7 +42,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
 
     # debug engine.query.to_sql
 
-    assert_equal 0, engine.query.all.length     
+    assert_equal 0, engine.query.all.length
   end
 
   test '_eq filters correct counts depending on user' do
@@ -81,7 +81,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     @u1 = FactoryBot.create :user, { role: 'employee', employee: FactoryBot.create(:employee) }
     @e1 = @u1.employee
 
-    2.times do 
+    2.times do
       # Create 2 orders by this employee but in random region
       FactoryBot.create :order, { employee: @e1 }
     end
@@ -118,7 +118,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     @u1 = FactoryBot.create :user, { role: 'employee', employee: FactoryBot.create(:employee) }
     @e1 = @u1.employee
 
-    2.times do 
+    2.times do
       FactoryBot.create :order, { employee: @e1, region: @e1.region }
     end
 
@@ -152,7 +152,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     @u1 = FactoryBot.create :user, { role: 'employee', employee: FactoryBot.create(:employee) }
     @e1 = @u1.employee
 
-    2.times do 
+    2.times do
       # Create 2 orders by this employee but in random region
       FactoryBot.create :order, { employee: @e1 }
     end
@@ -197,7 +197,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     @u1 = FactoryBot.create :user, { role: 'employee', employee: FactoryBot.create(:employee) }
     @e1 = @u1.employee
 
-    2.times do 
+    2.times do
       # Create 2 orders by this employee but in random region
       o = FactoryBot.create :order, { employee: @e1 }
       FactoryBot.create :order_detail, { order: o }
@@ -273,14 +273,14 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
         lookup :company
       end
     end
-    
+
     ActionBlocks.authorization :order do
       grant :admin, _not_eq(:status, "deleted")
     end
 
     ActionBlocks.model :order_detail do
       active_model OrderDetail
-      references :order do 
+      references :order do
         lookup :customer_company, :ocm
         lookup :status
       end
@@ -304,9 +304,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
       select_reqs: select_reqs
     )
 
-    # puts @engine.query.to_sql
-
-    debug @engine.query.to_sql
+    # debug @engine.query.to_sql
 
     results = @engine.query.all
     r1 = results.find {|r| r.id == d1.id}
@@ -374,7 +372,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     e = ActionBlocks::DataEngine.new(OrderDetail, select_reqs: select_reqs, user: user)
     e.process
 
-    debug e.query.to_sql
+    # debug e.query.to_sql
   end
 
   test 'no duplicate joins for authorization' do
@@ -409,7 +407,7 @@ class AuthorizationEngineTest < ActiveSupport::TestCase
     e = ActionBlocks::DataEngine.new(OrderDetail, select_reqs: select_reqs, user: user)
     e.process
 
-    debug e.query.to_sql
+    # debug e.query.to_sql
     assert_equal 1, e.query.to_sql.scan(/LEFT OUTER JOIN/).count
 
     ActionBlocks.config[:should_authorize] = false
