@@ -107,6 +107,28 @@ module ActionBlocks
       end
     end
 
+    def self.add_scheme_helpers
+      self.delegate_class.define_method(:_and) do |*args|
+          return [:and, *args] 
+      end
+  
+      self.delegate_class.define_method(:_or) do |*args| 
+          return [:or, *args] 
+      end
+  
+      self.delegate_class.define_method(:_eq) do |left, right|
+          return [:eq, left, right] 
+      end
+      
+      self.delegate_class.define_method(:_user) do |field|
+          return [:user, field]
+      end
+  
+      self.delegate_class.define_method(:_not_eq) do |left, right|
+          return [:not_eq, left, right]
+      end  
+    end
+
     def self.builds_many(field_name, entry_method, klass)
       self.array_fields().append(field_name)
       self.define_method("#{field_name}_hash") do

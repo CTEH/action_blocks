@@ -3,26 +3,7 @@ module ActionBlocks
         block_type :authorization
         sets :active_model
         builds_many :rls, :grant, 'ActionBlocks::RlsBuilder'
-
-        AuthorizationBuilder.delegate_class.define_method(:_and) do |*args|
-            return [:and, *args] 
-        end
-
-        AuthorizationBuilder.delegate_class.define_method(:_or) do |*args| 
-            return [:or, *args] 
-        end
-
-        AuthorizationBuilder.delegate_class.define_method(:_eq) do |left, right|
-            return [:eq, left, right] 
-        end
-        
-        AuthorizationBuilder.delegate_class.define_method(:_user) do |field|
-            return [:user, field]
-        end
-
-        AuthorizationBuilder.delegate_class.define_method(:_not_eq) do |left, right|
-            return [:not_eq, left, right]
-        end
+        add_scheme_helpers
     end
 
     class RlsBuilder < ActionBlocks::BlockType
