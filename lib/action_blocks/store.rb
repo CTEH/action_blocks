@@ -51,6 +51,17 @@ module ActionBlocks
       m.after_build(nil, *p)
     end
 
+    def command(*p, &block)
+      m = ActionBlocks::CommandBuilder.new()
+      m.id = p.first
+      m.before_build(nil, *p)
+      store(m)
+      add_to_validator(m)
+      m.evaluate(&block) if block
+      m.after_build(nil, *p)
+    end
+
+
     def valid?
       @validation_store.all? { |builder| builder.valid? }
     end

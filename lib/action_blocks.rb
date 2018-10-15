@@ -14,6 +14,7 @@ module ActionBlocks
   autoload :SummaryFieldAggregationFunctions, 'action_blocks/builders/summary_field_aggregation_functions'
   autoload :TableBuilder, 'action_blocks/builders/table_builder'
   autoload :WorkspaceBuilder, 'action_blocks/builders/workspace_builder'
+  autoload :CommandBuilder, 'action_blocks/builders/command_builder'
 
   # autoload :AuthorizationEngine, 'action_blocks/data_engine/authorization_engine'
   autoload :AuthorizationAdapter, 'action_blocks/data_engine/authorization_adapter'
