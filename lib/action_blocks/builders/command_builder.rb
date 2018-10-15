@@ -21,7 +21,7 @@ module ActionBlocks
 
     def before_build(parent, *args)
       if parent.is_a?(ActionBlocks::CommandBuilder)
-        @model = parent.context
+        @model_key = "model-#{parent.context.id}"
       end
     end
   end

@@ -46,6 +46,20 @@ class CommandBuilderTest < ActiveSupport::TestCase
     assert_not_nil ActionBlocks.find('command-create_new_order').form
   end
 
+  test 'command form receives context from command' do
+    ActionBlocks.model :order
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+    end
+
+    assert_equal :order, ActionBlocks.find('command-create_new_order').form.model.id
+  end
+
+
   test 'command block can specify results' do
     ActionBlocks.model :order
 
@@ -60,6 +74,24 @@ class CommandBuilderTest < ActiveSupport::TestCase
 
     assert_not_nil ActionBlocks.find('command-create_new_order').results_in
   end
+
+  test 'command results can specify identifier' do
+    ActionBlocks.model :order
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+
+        results_in :created_order do |context, command, user, event| 
+            # implementation
+        end
+    end
+
+    assert_equal :created_order, ActionBlocks.find('command-create_new_order').results_in.id
+  end
+
 
   test 'command results can specify implementation' do
     ActionBlocks.model :order
