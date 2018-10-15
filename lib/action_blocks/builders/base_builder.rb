@@ -57,6 +57,23 @@ module ActionBlocks
       end
     end
 
+    def self.builds_with_block(field_name, klass)
+      self.send(:attr_accessor, field_name)
+      self.delegate_class.define_method(field_name) do |*p, &block|
+        dsl_class = eval(klass.to_s)
+        n = dsl_class.new()
+        n.id = p.first
+        n.before_build(@obj, *p, &block)
+        if n.is_block?
+          ActionBlocks.store(n)
+        end
+        ActionBlocks.add_to_validator(n)
+        # n.dsl_delegate.instance_eval(&block) if block!=nil
+        n.after_build(@obj, p.first)
+        @obj.send("#{field_name}=", n)
+      end
+    end
+
     def self.sets_many(field_name, entry_method)
       self.array_fields().append(field_name)
       self.send(:attr_accessor, field_name)

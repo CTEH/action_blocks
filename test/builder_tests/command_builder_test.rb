@@ -46,4 +46,54 @@ class CommandBuilderTest < ActiveSupport::TestCase
     assert_not_nil ActionBlocks.find('command-create_new_order').form
   end
 
+  test 'command block can specify results' do
+    ActionBlocks.model :order
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+
+        results_in :created_order
+    end
+
+    assert_not_nil ActionBlocks.find('command-create_new_order').results_in
+  end
+
+  test 'command results can specify implementation' do
+    ActionBlocks.model :order
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+
+        results_in :created_order do |context, command, user, event| 
+            # implementation
+        end
+    end
+
+    assert_not_nil ActionBlocks.find('command-create_new_order').results_in.results_method
+  end
+
+  test 'command results are mandatory' do
+    ActionBlocks.model :order do
+        active_model Order
+    end
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+
+        # results_in :created_order do |context, command, user, event| 
+        #     puts 'test'
+        # end
+    end
+
+    assert ActionBlocks.invalid?
+  end
 end
