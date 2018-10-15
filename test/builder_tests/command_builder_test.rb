@@ -33,4 +33,17 @@ class CommandBuilderTest < ActiveSupport::TestCase
     assert_equal ActionBlocks.find('model-order'), ActionBlocks.find('command-create_new_order').context
   end
 
+  test 'command block can specify form' do
+    ActionBlocks.model :order
+
+    ActionBlocks.command :create_new_order do
+        context :order
+
+        form do
+        end
+    end
+
+    assert_not_nil ActionBlocks.find('command-create_new_order').form
+  end
+
 end
