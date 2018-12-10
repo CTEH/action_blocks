@@ -1,0 +1,79 @@
+/* to read */
+/* https://cloudfour.com/thinks/the-ems-have-it-proportional-media-queries-ftw/ */
+
+
+@custom-media --phone (max-width: 30em);
+@custom-media --tablet (min-width: 30em) and (max-width: 50em);
+@custom-media --desktop (min-width: 50em);
+
+
+.ActiveBlock-Form {
+  line-height: 16px;
+  font-size: 12px;
+
+  & section {
+    /* border: 1px solid pink; */
+
+    @media (--phone) {
+      width: 100%;
+    }
+    @media (--tablet) {
+      width: 100%;
+    }
+    @media (--desktop) {
+      width: 50%;
+      float: left;
+    }
+
+    margin-bottom: 10px;
+  }
+}
+
+.ActiveBlock-Form {
+  & header {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      background-color: #888;
+      margin: 16px 8px 0 0;
+      color: #fff;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      & h3 {
+        line-height: 32px;
+        font-size: 16px;
+        font-weight: 700px;
+        padding: 0 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        font-weight: bold;
+        /* border: 1px solid blue; */
+      }
+  }
+}
+
+
+.ActiveBlock-Form {
+  & dl {
+    margin: 1px;
+    & dt {
+        float: left;
+        padding: 4px 4px 4px 4px;
+        width: 121px;
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 16px;
+        font-size: 12px;
+    }
+    & dd {
+        margin: 0 8px 0 0;
+        padding: 4px 8px 4px 8px;
+        min-height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background-color: #e7e7e7;
+    }
+  }
+}

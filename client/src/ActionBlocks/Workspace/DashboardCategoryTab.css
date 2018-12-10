@@ -1,0 +1,14 @@
+.Subspace .header .tabs a:hover {
+  /* border-top: 1px solid var(--primaryColor); */
+  color: black;
+}
+
+.Subspace .header .tabs a.active-true {
+  /* border-top: 1px solid var(--primaryColor); */
+  color: var(--chromeColor);
+	background-color: white;
+  border-top: 1px solid var(--primaryBg);
+  border-left: 1px solid var(--chromeBorder);
+  border-right: 1px solid var(--chromeBorder);
+  border-bottom: 1px solid transparent;
+}

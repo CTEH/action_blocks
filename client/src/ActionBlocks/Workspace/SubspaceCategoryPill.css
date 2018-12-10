@@ -1,0 +1,11 @@
+.Workspace .right a.active-true {
+  /* color: var(--primaryColor); */
+  color: white;
+  background-color: var(--primaryBg);
+}
+
+.Workspace .right a.active-true:visited {
+  /* color: var(--primaryColor); */
+  color: white;
+  background-color: var(--primaryBg);
+}

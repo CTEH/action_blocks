@@ -1,0 +1,50 @@
+.Subspace .header {
+  background-color: var(--chromeBg);
+  color: var(--chromeColor);
+  padding-left: 0 0px;
+  /* font-family: Verdana, Geneva, sans-serif; */
+  font-size: 12px;
+  border-bottom: 0px;
+  overflow: hidden; /* clearfix */
+}
+
+.Subspace .header .tabs {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  overflow: visible;
+  margin-top: 24px;
+  padding: 8px 8px;
+  border-bottom: 1px solid var(--chromeBorder);
+}
+
+.Subspace .header h2 {
+  padding-left: 12px;
+  padding-top: 4px;
+  font-size: 20px;
+  margin-bottom: -15px;  
+}
+
+/* .Subspace .tabs > a + a {
+  margin-left: 8px;
+} */
+
+.Subspace .header .tabs a {
+  /* border-top: 1px solid var(--chromeColorBg); */
+  margin-left: 8px;
+	text-decoration: none;
+  float: left;
+  display: block;
+  margin-bottom: -1px;
+	font-size: 12px;
+	padding: 12px 15px;
+	text-align: center;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.Subspace .canvas {
+  padding: 16px 8px 0px 8px;
+}

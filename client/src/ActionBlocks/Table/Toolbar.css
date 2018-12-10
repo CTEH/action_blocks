@@ -1,0 +1,44 @@
+.react-grid-Toolbar {
+  border: 0px;
+  padding: 0px;
+  /* background-color: pink; */
+  height: auto;
+  padding-bottom: 0.25rem;
+  overflow: hidden;
+}
+
+.react-grid-Toolbar .title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  float: left;
+  /* background-color: green; */
+}
+
+.react-grid-Toolbar .actions {
+  float: left;
+  /* background-color: blue; */
+  /* margin-left: 1rem; */
+}
+
+
+.react-grid-Toolbar .actions * {
+  margin-left: 4px;
+}
+
+.react-grid-Toolbar .actions :first-child {
+  margin-left: 0px;
+}
+
+
+.react-grid-Toolbar .btn {
+  background-color: #e6e6e6;
+  border: 1px solid #bbb;
+  color: #333;
+  vertical-align: middle;
+  padding: 4px 8px;
+  /* margin: auto; */
+}
+
+.react-grid-Toolbar .btn:first-letter {
+  text-transform:capitalize;
+}

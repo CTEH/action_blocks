@@ -1,0 +1,30 @@
+.BlockProvider_errors {
+  padding: 2em;
+}
+.BlockProvider_error {
+  margin-bottom: 1em;
+
+  & .builder {
+    font-size: 1.25em;
+    padding: 0.5em;
+    background-color: #ddd;
+  }
+
+  & .key {
+    font-size: 1.15em;
+    padding: 0.5em;
+    margin-left: 2em;
+  }
+
+  & .message {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+    padding: 0.25em;
+    margin-left: 2em;
+    background-color: #eee;
+  }
+
+  & pre {
+    padding: 0.5em;
+  }
+}

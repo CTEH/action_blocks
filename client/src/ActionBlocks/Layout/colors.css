@@ -1,0 +1,21 @@
+:root {
+  --primaryBg: #0595db;
+  --primaryBgDesaturated: #B6CFDB;
+  --primaryBgLight: #46ABDB;
+
+  --primaryDarkBg: #03699A;
+  --primaryDarkColor: #46ABDB;
+
+  --primaryColor: white;
+  --primaryHoverBg: #87cbed;
+  --primaryHoverColor: white;
+
+  --navigationBg: #4D4d4d;
+  --navigationColor: #aab3b6;
+  --navigationHoverBg: var(--primaryBg);
+  --navigationHoverColor: var(--primaryColor);
+
+  --chromeBg: #EFF4F7;
+  --chromeColor: #555;
+  --chromeBorder: #DDD;
+}

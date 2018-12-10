@@ -1,0 +1,42 @@
+.Workspace {
+  background-color: var(--navigationBg);
+  color: var(--navigationColor);
+  padding: 8px 8px;
+  /* font-family: Verdana, Geneva, sans-serif; */
+  font-size: 12px;
+}
+
+.Workspace .left {
+  margin: auto;
+  float: left;
+}
+
+.Workspace .right {
+  margin: auto;
+  float: right;
+  margin-left: 30px;
+}
+.Workspace .title {
+  display: inline-block;
+  font-size: 20px;
+}
+
+.Workspace .right a {
+  display: inline-block;
+	text-decoration: none;
+	font-size: 12px;
+  margin:  0 0px;
+	padding: 4px 15px;
+	text-align: center;
+  border-radius: 16px;
+  color: var(--navigationColor);
+}
+
+.Workspace .right a:visited {
+  color: var(--navigationColor);
+	background-color: var(--primaryBg);
+}
+
+.Workspace .right a:hover {
+  color: white;
+}

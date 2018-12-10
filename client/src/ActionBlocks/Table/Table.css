@@ -1,0 +1,25 @@
+.react-grid-HeaderCell .form-group {
+  margin: -4px;
+}
+
+.active-block-Table {
+  font-size: 12px;
+}
+
+.active-block-TableFooter {
+  margin-top: 0.5em;
+}
+
+.react-grid-Cell__value .btn {
+  background-color: #e6e6e6;
+  border: 1px solid #bbb;
+  color: #333;
+  vertical-align: middle;
+  padding: 2px 4px;
+  margin: auto;
+  font-size: 12px;
+}
+
+.react-grid-Cell__value .btn:first-letter {
+  text-transform:capitalize;
+}
