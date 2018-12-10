@@ -33,7 +33,7 @@ class CreateOrder < ActionBlocks::Command
 
     # Don't trust the client app. Although we send down javascript for client side calculation of fields, 
     # there needs to be a server-side equivalent to actually calculate the value
-    def order_total do
+    def order_total
         return details.reduce { |sum, detail| sum + (detail.quantity * detail.unit_price) }
     end
 end
