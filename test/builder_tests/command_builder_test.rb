@@ -164,6 +164,8 @@ class CommandBuilderTest < ActiveSupport::TestCase
 
     ActionBlocks.model :order
 
+    ActionBlocks.model :customer
+
     ActionBlocks.command :create_new_order do
       context :customer # should be optional
 
@@ -184,7 +186,7 @@ class CommandBuilderTest < ActiveSupport::TestCase
           # default -> (context, params) { context.vendor.default_rate_sheet }
 
           # specified as def rate_sheet_options in command implementation class
-          options [:vendor], -> (context, params) { context.vendor.rate_sheets.where(status: 'active') }
+          # options [:vendor], -> (context, params) { context.vendor.rate_sheets.where(status: 'active') }
           behavior do
             default :read_only
             editable "return command.change_items.length == 0"
@@ -199,13 +201,13 @@ class CommandBuilderTest < ActiveSupport::TestCase
           reference :product do
             param :rate_sheet, "command.rate_sheet" # need a solution for initial population of options based on these params
             # specified as def change_items_rate_options
-            options -> (context, params) { RateSheet.find(params.rate_sheet).rates }
+            # options -> (context, params) { RateSheet.find(params.rate_sheet).rates }
             display [:code, :description]
           end
 
           reference :product_variation do
             param :product, "command.product"
-            options -> (context, params) { ProductVariation.where(product: params.product) }
+            # options -> (context, params) { ProductVariation.where(product: params.product) }
             display [:description, :color, :size]
           end
 

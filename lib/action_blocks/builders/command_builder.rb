@@ -81,7 +81,7 @@ module ActionBlocks
 
     def before_build(parent, *args)
       @key = args[0]
-      @context = parent.context
+      # @context = parent.context
     end
 
     def reference_value()
