@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_24_173940) do
+ActiveRecord::Schema.define(version: 2018_10_29_163235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2018_09_24_173940) do
     t.index ["region_id"], name: "index_orders_on_region_id"
   end
 
+  create_table "product_variations", force: :cascade do |t|
+    t.bigint "product_id"
+    t.string "description"
+    t.string "code"
+    t.string "color"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_variations_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -133,9 +144,9 @@ ActiveRecord::Schema.define(version: 2018_09_24_173940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "jti", null: false
-    t.string "role"
     t.bigint "employee_id"
     t.bigint "customer_id"
+    t.string "role"
     t.index ["customer_id"], name: "index_users_on_customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["employee_id"], name: "index_users_on_employee_id"
@@ -151,6 +162,7 @@ ActiveRecord::Schema.define(version: 2018_09_24_173940) do
   add_foreign_key "orders", "customers", column: "referred_by_id"
   add_foreign_key "orders", "employees"
   add_foreign_key "orders", "regions"
+  add_foreign_key "product_variations", "products"
   add_foreign_key "users", "customers"
   add_foreign_key "users", "employees"
 end

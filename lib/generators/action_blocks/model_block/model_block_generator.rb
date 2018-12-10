@@ -1,5 +1,6 @@
 require 'rails/generators/base'
 require 'rails/generators/resource_helpers'
+require_relative '../../generator_helper'
 
 module ActionBlocks
   module Generators

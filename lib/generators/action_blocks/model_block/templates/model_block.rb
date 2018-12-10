@@ -1,9 +1,8 @@
 ActionBlocks.model <%=variable.to_sym.inspect%> do
-   <%=class_name%>
+  active_model <%=class_name%>
   singular_name <%=class_name.titleize.inspect%>
   plural_name <%=class_name.pluralize.titleize.inspect%>
-  name_column <%=content_columns.first.to_sym.inspect%>
-  sort {date_created: :desc}
+  name_field <%=content_columns.first.to_sym.inspect%>
 
   # Columns
 <%content_column_details.each do |attribute| -%>

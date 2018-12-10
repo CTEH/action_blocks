@@ -9,6 +9,7 @@ module ActionBlocks
     end
 
     builds_many :sections, :section, 'ActionBlocks::FormSectionBuilder'
+    builds_many :commands, :command, 'ActionBlocks::FormCommandBuilder'
 
     def before_build(parent, *args)
       @form_fields = []
@@ -28,7 +29,8 @@ module ActionBlocks
     def record_engine(user:, record_id:)
       DataEngine.new(model.active_model,
         filter_reqs: filter_reqs(user: user, record_id: record_id),
-        select_reqs: select_reqs(user: user)
+        select_reqs: select_reqs(user: user),
+        user: user
       )
     end
 
@@ -48,11 +50,29 @@ module ActionBlocks
       {
         context: @context,
         sections: @sections.map {|s| s.hashify(user)},
+        commands: @commands.map(&:hashify),
         key: key,
         type: type
       }
     end
 
+  end
+
+  class FormCommandBuilder < ActionBlocks::BaseBuilder
+    references :context, handler: -> (command_builder, command_id) do
+      command_builder.context_key = "command-#{command_id}"
+    end
+    sets :command_type
+
+    def before_build(parent, command_id, *_args)
+      @command_key = "command-#{command_id}"
+    end
+
+    def hashify()
+      {
+        key: @command_key,
+      }
+    end
   end
 
   # Section

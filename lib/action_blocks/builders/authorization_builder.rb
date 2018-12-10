@@ -4,6 +4,10 @@ module ActionBlocks
         sets :active_model
         builds_many :rls, :grant, 'ActionBlocks::RlsBuilder'
         includes_scheme_helpers
+
+        def hashify(user)
+            {}
+        end
     end
 
     class RlsBuilder < ActionBlocks::BlockType
@@ -16,6 +20,10 @@ module ActionBlocks
             @role = role
             @id = "#{parent.id}-#{role}"
             @scheme = scheme
+        end
+
+        def hashify(user)
+            {}
         end
     end
 end

@@ -13,6 +13,8 @@ module ActionBlocks
       builder.selection_key = "selection-#{model}-#{selection}"
     }
 
+    builds_many :commands, :command, 'ActionBlocks::TableCommandBuilder'
+
     builds_many :table_columns, :col, 'ActionBlocks::TableColumnBuilder'
 
     validates :columns, presence: true
@@ -132,6 +134,7 @@ module ActionBlocks
         column_keys: allowed_columns(nil),
         view: @view,
         model_key: model.key,
+        commands: @commands.map(&:hashify),
         table_columns: @table_columns.map(&:hashify)
       }
     end
@@ -228,7 +231,8 @@ module ActionBlocks
       data_engine = ActionBlocks::DataEngine.new(klass,
         select_fields: select_fields,
         selection_match_reqs: selection_match_reqs,
-        selection_filter_reqs: filter_reqs
+        selection_filter_reqs: filter_reqs,
+        user: user
       )
       data_engine
     end
@@ -239,6 +243,25 @@ module ActionBlocks
     end
 
 
+  end
+
+  class TableCommandBuilder < ActionBlocks::BaseBuilder
+    references :context, handler: -> (command_builder, command_id) do
+      command_builder.context_key = "command-#{command_id}"
+    end
+    sets :command_type
+
+    def before_build(parent, command_id, command_type, *_args)
+      @command_key = "command-#{command_id}"
+      @command_type = command_type
+    end
+
+    def hashify()
+      {
+        key: @command_key,
+        type: @command_type
+      }
+    end
   end
 
   class TableColumnBuilder < ActionBlocks::BaseBuilder

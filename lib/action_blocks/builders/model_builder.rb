@@ -12,6 +12,7 @@ module ActionBlocks
     builds_many :fields, :datetime, 'ActionBlocks::DatetimeFieldBuilder'
     builds_many :fields, :date, 'ActionBlocks::DateFieldBuilder'
     builds_many :fields, :integer, 'ActionBlocks::IntegerFieldBuilder'
+    builds_many :fields, :decimal, 'ActionBlocks::DecimalFieldBuilder'
     builds_many :fields, :attachment, 'ActionBlocks::AttachmentBuilder'
 
     builds_many :fields, :references, 'ActionBlocks::ReferenceFieldBuilder'
@@ -45,7 +46,7 @@ module ActionBlocks
     def name_to_json(record_id:, user:)
       select_reqs = [name_field.select_requirements]
       filter_reqs = [:eq, :id, record_id]
-      engine = DataEngine.new(active_model, select_reqs: select_reqs, filter_reqs: filter_reqs)
+      engine = DataEngine.new(active_model, select_reqs: select_reqs, filter_reqs: filter_reqs, user: user)
       engine.first_to_json
     end
 
@@ -562,5 +563,18 @@ module ActionBlocks
     end
   end
 
+  class DecimalFieldBuilder < ActionBlocks::FieldBlock
+    def before_build(parent, *args)
+      super(parent, *args)
+      @field_type = 'decimal'
+    end
+
+    def hashify(user)
+      {
+        type: :decimal,
+        id: @id
+      }
+    end
+  end
 
 end
